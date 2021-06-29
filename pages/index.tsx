@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
-export default function Home() {
+export default function Home({ posts }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -15,6 +15,15 @@ export default function Home() {
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
+
+        <div>
+          { posts.results.map(movie => (
+              <div key={movie.id}>
+                <h3>{movie.title}</h3>
+                <img src={'https://image.tmdb.org/t/p/w500' + movie.poster_path} alt={movie.title} />
+              </div>
+          ))}
+        </div>
 
         <p className={styles.description}>
           Get started by editing{' '}
@@ -66,4 +75,12 @@ export default function Home() {
       </footer>
     </div>
   )
+}
+
+export async function getStaticProps({ preview = null }) {
+  const res = await fetch('https://api.themoviedb.org/3/discover/movie?api_key=' + process.env.MOVIEDB_API_KEY);
+  const posts = await res.json();
+  return {
+    props: { posts, preview },
+  }
 }
