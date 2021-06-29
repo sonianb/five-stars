@@ -16,11 +16,11 @@ export default function Home({ posts }) {
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
 
-        <div>
+        <div className={styles.grid}>
           { posts.results.map(movie => (
               <div key={movie.id}>
                 <h3>{movie.title}</h3>
-                <img src={'https://image.tmdb.org/t/p/w500' + movie.poster_path} alt={movie.title} />
+                <Image loader={tmdbLoader} src={movie.poster_path} alt={movie.title} width={100} height={148} />
               </div>
           ))}
         </div>
@@ -83,4 +83,8 @@ export async function getStaticProps({ preview = null }) {
   return {
     props: { posts, preview },
   }
+}
+
+const tmdbLoader = ({ src, width, quality }) => {
+  return `https://image.tmdb.org/t/p/w500/${src}?w=${width}&q=${quality || 75}`
 }

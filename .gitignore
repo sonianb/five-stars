@@ -16,6 +16,7 @@
 /build
 
 # misc
+.firebase/
 /.idea/
 .DS_Store
 *.pem
