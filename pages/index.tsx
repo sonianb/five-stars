@@ -43,12 +43,8 @@ export default function Home({posts}) {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Welcome to Five Stars! &#9733; &#9733; &#9733; &#9733; &#9733;
         </h1>
-
-        <Link href="/posts/first-post">
-          <a>this page!</a>
-        </Link>
 
         <div className={styles.grid}>
           {posts.results.map(movie => (
