@@ -43,7 +43,7 @@ export default function Home({posts}) {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to Five Stars! &#9733; &#9733; &#9733; &#9733; &#9733;
+          Five Stars
         </h1>
 
         <div className={styles.grid}>
