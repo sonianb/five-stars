@@ -43,7 +43,7 @@ export default function Home({posts}) {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to Five Stars! &#9733; &#9733; &#9733; &#9733; &#9733;
+          Five Stars
         </h1>
 
         <div className={styles.grid}>
@@ -51,12 +51,12 @@ export default function Home({posts}) {
             <div key={movie.id} className={styles.card}>
               <h3>{movie.title}</h3>
               <Image loader={tmdbLoader} src={movie.poster_path} alt={movie.title} width={100} height={148}/>
-              <div>
-                <span onClick={() => rateMovie(movie.id, 1)}>1</span>
-                <span onClick={() => rateMovie(movie.id, 2)}>2</span>
-                <span onClick={() => rateMovie(movie.id, 3)}>3</span>
-                <span onClick={() => rateMovie(movie.id, 4)}>4</span>
-                <span onClick={() => rateMovie(movie.id, 5)}>5</span>
+              <div className={styles.stars}>
+                <span onClick={() => rateMovie(movie.id, 1)}>☆</span>
+                <span onClick={() => rateMovie(movie.id, 2)}>☆</span>
+                <span onClick={() => rateMovie(movie.id, 3)}>☆</span>
+                <span onClick={() => rateMovie(movie.id, 4)}>☆</span>
+                <span onClick={() => rateMovie(movie.id, 5)}>☆</span>
               </div>
             </div>
           ))}
