@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 function moviePage() {
     return <div>
         <h1>Movie Title</h1>
@@ -7,7 +9,10 @@ function moviePage() {
             <p>Director</p>
             <p>Writers</p>
             <p>Stars</p>
-        <span>Rating</span>
+            <span>Rating</span>
+            <Link href={'/'}>
+                <button>Go Back</button>
+            </Link>
         </section>
     </div>
 }
