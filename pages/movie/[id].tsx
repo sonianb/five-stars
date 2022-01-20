@@ -17,10 +17,12 @@ function MoviePage({movie}) {
     </div>
 }
 
-MoviePage.getInitialProps = async (ctx) => {
+export async function  getServerSideProps() {
     const res = await fetch('https://api.themoviedb.org/3/movie/585083?api_key=' + process.env.MOVIEDB_API_KEY);
     const movie = await res.json();
-    return {movie}
+    return {
+        props: {movie}
+    }
   }
   
-  export default MoviePage;
+export default MoviePage;
