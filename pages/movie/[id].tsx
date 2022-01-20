@@ -17,8 +17,9 @@ function MoviePage({movie}) {
     </div>
 }
 
-export async function  getServerSideProps() {
-    const res = await fetch('https://api.themoviedb.org/3/movie/585083?api_key=' + process.env.MOVIEDB_API_KEY);
+export async function  getServerSideProps(context) {
+    const movieId = context.params.id;
+    const res = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=` + process.env.MOVIEDB_API_KEY);
     const movie = await res.json();
     return {
         props: {movie}
