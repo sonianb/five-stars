@@ -1,13 +1,13 @@
 import Link from "next/link";
 
-function moviePage() {
+function MoviePage({movie}) {
     return <div>
-        <h1>Movie Title</h1>
+        <h1>{movie.title}</h1>
         <img src="" alt=""></img>
         <section>Information about the film
-            <p>Plot description</p>
-            <p>Director</p>
-            <p>Writers</p>
+            <p>{movie.overview}</p>
+            <p>{movie.production_companies.map(e => e.name).join(', ')}</p>
+            <p>{movie.genres.map(e => e.name).join(', ')}</p>
             <p>Stars</p>
             <span>Rating</span>
             <Link href={'/'}>
@@ -17,4 +17,10 @@ function moviePage() {
     </div>
 }
 
-export default moviePage;
+MoviePage.getInitialProps = async (ctx) => {
+    const res = await fetch('https://api.themoviedb.org/3/movie/585083?api_key=' + process.env.MOVIEDB_API_KEY);
+    const movie = await res.json();
+    return {movie}
+  }
+  
+  export default MoviePage;
