@@ -82,7 +82,7 @@ export default function Home({posts}) {
 }
 
 export async function getStaticProps({preview = null}) {
-  const res = await fetch('https://api.themoviedb.org/3/discover/movie?api_key=' + process.env.MOVIEDB_API_KEY);
+  const res = await fetch('https://api.themoviedb.org/3/discover/movie?api_key=' + process.env.NEXT_PUBLIC_MOVIEDB_API_KEY);
   const posts = await res.json();
   return {
     props: {posts, preview},
