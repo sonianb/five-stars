@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: yarn && yarn build && yarn run export
         env:
-            MOVIEDB_API_KEY: ${{ secrets.MOVIEDB_API_KEY }}
+            NEXT_PUBLIC_MOVIEDB_API_KEY: ${{ secrets.MOVIEDB_API_KEY }}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'

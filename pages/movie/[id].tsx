@@ -1,14 +1,29 @@
 import Link from "next/link";
 import Image from 'next/image'
+import useSWR from "swr";
+import { useRouter } from "next/router";
 
-function MoviePage({movie}) {
+
+const fetcher = (url) => fetch(url).then(res => res.json());
+
+function MoviePage() {
+    const router = useRouter()
+    const { id } = router.query
+    const { data, error } = useSWR(`https://api.themoviedb.org/3/movie/${id}?api_key=` + process.env.NEXT_PUBLIC_MOVIEDB_API_KEY, fetcher);
+
+    if (!data) return <p>Loading...</p>;
+    if (error) return <p>Error :(</p>;
+
+    console.log(data);
+
+
     return <div>
-        <h1>{movie.title}</h1>
-        <Image loader={tmdbLoader} src={movie.poster_path} alt={movie.title} width={200} height={300}/>
+        <h1>{data.title}</h1>
+        <Image loader={tmdbLoader} src={data.poster_path} alt={data.title} width={200} height={300} />
         <section>Information about the film
-            <p>{movie.overview}</p>
-            <p>{movie.production_companies.map(e => e.name).join(', ')}</p>
-            <p>{movie.genres.map(e => e.name).join(', ')}</p>
+            <p>{data.overview}</p>
+            <p>{data.production_companies.map(e => e.name).join(', ')}</p>
+            <p>{data.genres.map(e => e.name).join(', ')}</p>
             <p>Stars</p>
             <span>Rating</span>
             <Link href={'/'}>
@@ -18,16 +33,7 @@ function MoviePage({movie}) {
     </div>
 }
 
-export async function getServerSideProps(context) {
-    const movieId = context.params.id;
-    const res = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=` + process.env.MOVIEDB_API_KEY);
-    const movie = await res.json();
-    return {
-        props: {movie}
-    }
-}
-
-const tmdbLoader = ({src, width, quality}) => {
+const tmdbLoader = ({ src, width, quality }) => {
     return `https://image.tmdb.org/t/p/w500/${src}?w=${width}&q=${quality || 75}`
 }
 
