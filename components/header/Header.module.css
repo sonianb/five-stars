@@ -1,0 +1,14 @@
+.header {
+    text-align: center;
+    font-size: 2rem;
+    background-color: #315f72;
+    color: #f57e7e;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.2rem 1.7rem;
+}
+
+.navitem {
+    font-size: 1.5rem;
+}
