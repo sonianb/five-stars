@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from 'next/image'
 import useSWR from "swr";
 import { useRouter } from "next/router";
+import styles from "./Movie.module.css";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 
@@ -18,12 +19,11 @@ function MoviePage() {
 
     console.log(data);
 
-
     return <div>
         <Header />
         <h1>{data.title}</h1>
         <Image loader={tmdbLoader} src={data.poster_path} alt={data.title} width={200} height={300} />
-        <section>Information about the film
+        <section>Description
             <p>{data.overview}</p>
             <p>{data.production_companies.map(e => e.name).join(', ')}</p>
             <p>{data.genres.map(e => e.name).join(', ')}</p>
