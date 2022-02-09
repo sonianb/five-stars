@@ -3,6 +3,7 @@ import Image from 'next/image'
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import Header from "../../components/header/Header";
+import Footer from "../../components/footer/Footer";
 
 
 const fetcher = (url) => fetch(url).then(res => res.json());
@@ -32,6 +33,7 @@ function MoviePage() {
                 <button>Go Back</button>
             </Link>
         </section>
+        <Footer />
     </div>
 }
 
