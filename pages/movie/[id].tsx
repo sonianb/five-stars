@@ -5,6 +5,7 @@ import {useRouter} from "next/router";
 import styles from "./Movie.module.css";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
+import Ratings from "../../components/ratings/Ratings";
 
 
 const fetcher = (url) => fetch(url).then(res => res.json());
@@ -31,7 +32,7 @@ function MoviePage() {
             </ul>
             <section className={styles.ratingContainer}>
                 <p>Stars</p>
-                <span>Rating</span>
+                <Ratings movie={data} />
             </section>
             <Link href={'/'}>
                 <button>Go Back</button>
