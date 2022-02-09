@@ -29,8 +29,10 @@ function MoviePage() {
                 <li className={styles.listItem}>Production Companies {data.production_companies.map(e => e.name).join(', ')}</li>
                 <li className={styles.listItem}>Genre {data.genres.map(e => e.name).join(', ')}</li>
             </ul>
-            <p>Stars</p>
-            <span>Rating</span>
+            <section className={styles.ratingContainer}>
+                <p>Stars</p>
+                <span>Rating</span>
+            </section>
             <Link href={'/'}>
                 <button>Go Back</button>
             </Link>
