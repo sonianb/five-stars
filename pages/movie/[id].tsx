@@ -24,19 +24,21 @@ function MoviePage() {
         <Header />
         <section className={styles.movieContainer}>
             <h1 id={styles.h1Grid}>{data.title}</h1>
-            <Image loader={tmdbLoader} src={data.poster_path} alt={data.title} width={200} height={300} id={styles.imgGrid} />
-                <ul>
-                    <li className={styles.listItem} id={styles.plotGrid}>Plot {data.overview}</li>
-                    <li className={styles.listItem} id={styles.genreGrid}>Genre {data.genres.map(e => e.name).join(', ')}</li>
-                    <li className={styles.listItem} id={styles.productionGrid}>Production Companies {data.production_companies.map(e => e.name).join(', ')}</li>
-                </ul>
-                <section className={styles.ratingContainer} id={styles.ratingGrid}>
-                    <p>Rate the movie</p>
-                    <Ratings movie={data} />
-                </section>
-                <Link href={'/'}>
-                    <button>Go Back</button>
-                </Link>
+            <div id={styles.imgGrid}>
+                <Image loader={tmdbLoader} src={data.poster_path} alt={data.title} width={200} height={300} />
+            </div>
+            <div>
+                <p className={styles.listItem} id={styles.plotGrid}>Plot {data.overview}</p>
+                <p className={styles.listItem} id={styles.genreGrid}>Genre {data.genres.map(e => e.name).join(', ')}</p>
+                <p className={styles.listItem} id={styles.productionGrid}>Production Companies {data.production_companies.map(e => e.name).join(', ')}</p>
+            </div>
+            <section className={styles.ratingContainer} id={styles.ratingGrid}>
+                <p>Rate the movie</p>
+                <Ratings movie={data} />
+            </section>
+            <Link href={'/'}>
+                <button>Go Back</button>
+            </Link>
         </section>
         <Footer />
     </div>
