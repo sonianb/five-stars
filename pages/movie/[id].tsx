@@ -22,21 +22,21 @@ function MoviePage() {
 
     return <div>
         <Header />
-        <h1>{data.title}</h1>
-        <Image loader={tmdbLoader} src={data.poster_path} alt={data.title} width={200} height={300} />
-        <section>Description
-            <ul>
-                <li className={styles.listItem}>Plot {data.overview}</li>
-                <li className={styles.listItem}>Production Companies {data.production_companies.map(e => e.name).join(', ')}</li>
-                <li className={styles.listItem}>Genre {data.genres.map(e => e.name).join(', ')}</li>
-            </ul>
-            <section className={styles.ratingContainer}>
-                <p>Stars</p>
-                <Ratings movie={data} />
-            </section>
-            <Link href={'/'}>
-                <button>Go Back</button>
-            </Link>
+        <section className={styles.movieContainer}>
+            <h1 id="h1-grid">{data.title}</h1>
+            <Image loader={tmdbLoader} src={data.poster_path} alt={data.title} width={200} height={300} id="img-grid" />
+                <ul>
+                    <li className={styles.listItem} id="plot-grid">Plot {data.overview}</li>
+                    <li className={styles.listItem} id="genre-grid">Genre {data.genres.map(e => e.name).join(', ')}</li>
+                    <li className={styles.listItem} id="production-grid">Production Companies {data.production_companies.map(e => e.name).join(', ')}</li>
+                </ul>
+                <section className={styles.ratingContainer} id="rating-grid">
+                    <p>Rate the movie</p>
+                    <Ratings movie={data} />
+                </section>
+                <Link href={'/'}>
+                    <button>Go Back</button>
+                </Link>
         </section>
         <Footer />
     </div>

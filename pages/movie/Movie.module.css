@@ -1,0 +1,35 @@
+.movieContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(5, 10rem);
+    grid-template-areas:
+    "h1 h1"
+    "image plot"
+    "image genre"
+    "image production"
+    "rating rating"
+}
+
+#h1-grid {
+    grid-area: h1;
+}
+
+#img-grid {
+    grid-area: image;
+}
+
+#plot-grid {
+    grid-area: plot;
+}
+
+#production-grid {
+    grid-area: production;
+}
+
+#genre-grid {
+    grid-area: genre;
+}
+
+#rating-grid {
+    grid-area: rating;
+}
