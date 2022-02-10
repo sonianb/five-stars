@@ -10,26 +10,26 @@
     "rating rating"
 }
 
-#h1-grid {
+#h1Grid {
     grid-area: h1;
 }
 
-#img-grid {
+#imgGrid {
     grid-area: image;
 }
 
-#plot-grid {
+#plotGrid {
     grid-area: plot;
 }
 
-#production-grid {
+#productionGrid {
     grid-area: production;
 }
 
-#genre-grid {
+#genreGrid {
     grid-area: genre;
 }
 
-#rating-grid {
+#ratingGrid {
     grid-area: rating;
 }
