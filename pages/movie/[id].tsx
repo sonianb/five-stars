@@ -27,9 +27,18 @@ function MoviePage() {
             <div id={styles.imgGrid}>
                 <Image loader={tmdbLoader} src={data.poster_path} alt={data.title} width={200} height={300} />
             </div>
-            <h2 className={styles.listItem} id={styles.plotGrid}>Plot</h2> <p id={styles.plotGrid}>{data.overview}</p>
-            <h2 className={styles.listItem} id={styles.genreGrid}>Genre</h2> <p id={styles.genreGrid}>{data.genres.map(e => e.name).join(', ')}</p>
-            <h2 className={styles.listItem} id={styles.productionGrid}>Production Companies</h2> <p id={styles.productionGrid}>{data.production_companies.map(e => e.name).join(', ')}</p>
+            <div id={styles.plotGrid}>
+                <h2 className={styles.listItem}>Plot</h2>
+                <p >{data.overview}</p>
+            </div>
+
+            <div id={styles.genreGrid}>
+            <h2 className={styles.listItem}>Genre</h2> <p>{data.genres.map(e => e.name).join(', ')}</p>
+            </div>
+
+            <div id={styles.productionGrid}>
+            <h2 className={styles.listItem}>Production Companies</h2> <p>{data.production_companies.map(e => e.name).join(', ')}</p>
+            </div>
             <section className={styles.ratingContainer} id={styles.ratingGrid}>
                 <p>Rate the movie</p>
                 <Ratings movie={data} />
