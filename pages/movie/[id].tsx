@@ -33,19 +33,24 @@ function MoviePage() {
             </div>
 
             <div id={styles.genreGrid}>
-            <h2 className={styles.listItem}>Genre</h2> <p>{data.genres.map(e => e.name).join(', ')}</p>
+                <h2 className={styles.listItem}>Genre</h2>
+                <p>{data.genres.map(e => e.name).join(', ')}</p>
             </div>
 
             <div id={styles.productionGrid}>
-            <h2 className={styles.listItem}>Production Companies</h2> <p>{data.production_companies.map(e => e.name).join(', ')}</p>
+                <h2 className={styles.listItem}>Production Companies</h2>
+                <p>{data.production_companies.map(e => e.name).join(', ')}</p>
             </div>
+
             <section className={styles.ratingContainer} id={styles.ratingGrid}>
                 <p>Rate the movie</p>
                 <Ratings movie={data} />
             </section>
-            <Link href={'/'}>
-                <button>Go Back</button>
-            </Link>
+            <div>
+                <Link href={'/'}>
+                    <button>Go Back</button>
+                </Link>
+            </div>
         </section>
         <Footer />
     </div>
