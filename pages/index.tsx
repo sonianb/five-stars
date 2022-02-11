@@ -58,7 +58,9 @@ export default function Home({posts}) {
                 <h2>{movie.title}</h2>
               </Link>
               <Image loader={tmdbLoader} src={movie.poster_path} alt={movie.title} width={100} height={148} />
-              <Ratings movie={movie} />
+              <div>
+                <Ratings movie={movie} />
+              </div>
             </div>
           ))}
         </div>
