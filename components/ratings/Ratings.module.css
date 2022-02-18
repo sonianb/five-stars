@@ -1,17 +1,17 @@
 .stars {
   display: inline;
-    unicode-bidi: bidi-override;
-    direction: rtl;
-  }
-  
-  .stars > span {
-    display: inline-block;
-    position: relative;
-    width: 1.1em;
-  }
-  
-  .stars > span:hover:before,
-  .stars > span:hover ~ span:before {
-     content: "\2605";
-     position: absolute;
-  }
+  unicode-bidi: bidi-override;
+  direction: rtl;
+}
+
+.stars>span {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
+}
+
+.stars>span:hover:before,
+.stars>span:hover~span:before {
+  content: "\2605";
+  position: absolute;
+}
