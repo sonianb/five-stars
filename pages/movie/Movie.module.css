@@ -42,4 +42,8 @@
 
 #ratingGrid {
     grid-area: rating;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
 }
