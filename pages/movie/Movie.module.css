@@ -13,6 +13,12 @@
     "rating rating"
 }
 
+.moviePoster {
+    align-items: center;
+    justify-content: center;
+    display: grid;
+}
+
 #h1Grid {
     grid-area: h1;
     text-align: center;

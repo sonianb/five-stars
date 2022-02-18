@@ -24,8 +24,8 @@ function MoviePage() {
         <Header />
         <section className={styles.movieContainer}>
             <h1 id={styles.h1Grid}>{data.title}</h1>
-            <div id={styles.imgGrid}>
-                <Image loader={tmdbLoader} src={data.poster_path} alt={data.title} width={200} height={300} />
+            <div className={styles.moviePoster} id={styles.imgGrid}>
+                <Image loader={tmdbLoader} src={data.poster_path} alt={data.title} width={300} height={450} />
             </div>
             <div id={styles.plotGrid}>
                 <h2 className={styles.listItem}>Plot</h2>
