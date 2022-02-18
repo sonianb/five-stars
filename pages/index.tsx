@@ -8,6 +8,7 @@ import {doc, getFirestore, updateDoc} from 'firebase/firestore';
 import {getPerformance} from "firebase/performance";
 import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
+import Ratings from '../components/ratings/Ratings';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBlazGlIWRSB5SuBk_rP8mCofOPE_Dwms8",
@@ -57,12 +58,8 @@ export default function Home({posts}) {
                 <h2>{movie.title}</h2>
               </Link>
               <Image loader={tmdbLoader} src={movie.poster_path} alt={movie.title} width={100} height={148} />
-              <div className={styles.stars}>
-                <span onClick={() => rateMovie(movie.id, 1)}>☆</span>
-                <span onClick={() => rateMovie(movie.id, 2)}>☆</span>
-                <span onClick={() => rateMovie(movie.id, 3)}>☆</span>
-                <span onClick={() => rateMovie(movie.id, 4)}>☆</span>
-                <span onClick={() => rateMovie(movie.id, 5)}>☆</span>
+              <div>
+                <Ratings movie={movie} />
               </div>
             </div>
           ))}

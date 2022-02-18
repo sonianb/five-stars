@@ -1,0 +1,49 @@
+.movieContainer {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(5rem, 1fr));
+    grid-template-rows: repeat(5, 10rem);
+    grid-template-areas:
+    "h1 h1"
+    "image plot"
+    "image genre"
+    "image production"
+    "rating rating"
+}
+
+.moviePoster {
+    align-items: center;
+    justify-content: center;
+    display: grid;
+}
+
+#h1Grid {
+    grid-area: h1;
+    text-align: center;
+}
+
+#imgGrid {
+    grid-area: image;
+}
+
+#plotGrid {
+    grid-area: plot;
+}
+
+#productionGrid {
+    grid-area: production;
+}
+
+#genreGrid {
+    grid-area: genre;
+}
+
+#ratingGrid {
+    grid-area: rating;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+}
