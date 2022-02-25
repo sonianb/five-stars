@@ -46,7 +46,7 @@ export default function Home({ posts }) {
         <div className={styles.grid}>
           {posts.results.map(movie => (
             <div key={movie.id} className={styles.card}>
-              <Link href={'/movie/' + movie.id}>
+              <Link href={'/movie/' + movie.id} passHref>
                 <h2>{movie.title}</h2>
               </Link>
               <Image loader={tmdbLoader} src={movie.poster_path} alt={movie.title} width={100} height={148} />

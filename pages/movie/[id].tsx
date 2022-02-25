@@ -47,7 +47,7 @@ function MoviePage() {
                 <Ratings movie={data} />
             </section>
             <div>
-                <Link href={'/'}>
+                <Link href={'/'} passHref>
                     <button>Go Back</button>
                 </Link>
             </div>
