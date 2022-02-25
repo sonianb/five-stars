@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { useEffect, useState } from 'react';
 
 
 const firebaseConfig = {
@@ -17,6 +18,26 @@ const firebaseApp = initializeApp(firebaseConfig);
 
 const auth = getAuth();
 
+export const useAuth = () => {
+  const [user, setUser] = useState<undefined | { email: string }>(undefined);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true)
+    onAuthStateChanged(auth, function handleAuth(user) {
+      if (user) {
+        setUser(user);
+        setLoading(false);
+      } else {
+        setUser(null);
+        setLoading(false)
+      }
+    });
+  }, [user]);
+
+  return { user, loading };
+}
+
 export const signIn = async (email, password) => await signInWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     // Signed in 
@@ -29,5 +50,10 @@ export const signIn = async (email, password) => await signInWithEmailAndPasswor
     const errorMessage = error.message;
     console.error(errorCode, errorMessage);
   });
+
+export const signOutUser = () => signOut(auth);
+
+
+export const onAuthState = (callback) => onAuthStateChanged(auth, callback);
 
 export default firebaseApp;

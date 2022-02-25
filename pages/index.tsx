@@ -2,14 +2,11 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import styles from '../styles/Home.module.css'
-import { doc, getFirestore, updateDoc } from 'firebase/firestore';
 import { getPerformance } from "firebase/performance";
 import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
 import Ratings from '../components/ratings/Ratings';
-import firebaseApp, { signIn } from '../lib/firebase';
-
-const db = getFirestore(firebaseApp);
+import firebaseApp, { signIn, signOutUser, useAuth } from '../lib/firebase';
 
 if (process.browser) {
   getPerformance(firebaseApp);
@@ -19,17 +16,16 @@ export default function Home({ posts }) {
   let email: string = '';
   let password: string = '';
 
-  const rateMovie = async (id: string, rating: number) => {
-    await updateDoc(doc(db, 'users', 't6aEmLDMWEzR839g5XsP'), {
-      ['ratings.' + id]: rating
-    });
-  };
+  const auth = useAuth();
 
   const handleEmail = (event) => email = event.target.value;
   const handlePassword = (event) => password = event.target.value;
 
   const handleSignIn = async () => {
     signIn(email, password);
+  }
+  const handleSignOut = async () => {
+    signOutUser();
   }
 
   return (
@@ -62,11 +58,18 @@ export default function Home({ posts }) {
         </div>
       </main>
 
-      <section>
-        <input type="email" onChange={handleEmail} placeholder="email" />
-        <input type="password" onChange={handlePassword} placeholder="password" />
-        <button onClick={handleSignIn}>Sign in</button>
-      </section>
+      {auth?.user?.email ?
+        <section>
+          {auth.user.email}
+          <button onClick={handleSignOut}>Sign out</button>
+        </section>
+        :
+        <section>
+          <input type="email" onChange={handleEmail} placeholder="email" />
+          <input type="password" onChange={handlePassword} placeholder="password" />
+          <button onClick={handleSignIn}>Sign in</button>
+        </section>
+      }
 
       <Footer />
     </div>
