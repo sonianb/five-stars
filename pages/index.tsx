@@ -1,40 +1,36 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react';
 import styles from '../styles/Home.module.css'
-import {initializeApp} from 'firebase/app';
-import {doc, getFirestore, updateDoc} from 'firebase/firestore';
-import {getPerformance} from "firebase/performance";
+import { doc, getFirestore, updateDoc } from 'firebase/firestore';
+import { getPerformance } from "firebase/performance";
 import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
 import Ratings from '../components/ratings/Ratings';
+import firebaseApp, { signIn } from '../lib/firebase';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBlazGlIWRSB5SuBk_rP8mCofOPE_Dwms8",
-  authDomain: "five-stars-areeltrip.firebaseapp.com",
-  databaseURL: "https://five-stars-areeltrip-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "five-stars-areeltrip",
-  storageBucket: "five-stars-areeltrip.appspot.com",
-  messagingSenderId: "189009950416",
-  appId: "1:189009950416:web:304a18ade6c99c466910d5",
-  measurementId: "G-TH67C7W223"
-};
-
-const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
 
 if (process.browser) {
   getPerformance(firebaseApp);
 }
 
-export default function Home({posts}) {
+export default function Home({ posts }) {
+  let email: string = '';
+  let password: string = '';
 
   const rateMovie = async (id: string, rating: number) => {
     await updateDoc(doc(db, 'users', 't6aEmLDMWEzR839g5XsP'), {
       ['ratings.' + id]: rating
     });
   };
+
+  const handleEmail = (event) => email = event.target.value;
+  const handlePassword = (event) => password = event.target.value;
+
+  const handleSignIn = async () => {
+    signIn(email, password);
+  }
 
   return (
     <div className={styles.container}>
@@ -66,19 +62,25 @@ export default function Home({posts}) {
         </div>
       </main>
 
+      <section>
+        <input type="email" onChange={handleEmail} placeholder="email" />
+        <input type="password" onChange={handlePassword} placeholder="password" />
+        <button onClick={handleSignIn}>Sign in</button>
+      </section>
+
       <Footer />
     </div>
   )
 }
 
-export async function getStaticProps({preview = null}) {
+export async function getStaticProps({ preview = null }) {
   const res = await fetch('https://api.themoviedb.org/3/discover/movie?api_key=' + process.env.NEXT_PUBLIC_MOVIEDB_API_KEY);
   const posts = await res.json();
   return {
-    props: {posts, preview},
+    props: { posts, preview },
   }
 }
 
-const tmdbLoader = ({src, width, quality}) => {
+const tmdbLoader = ({ src, width, quality }) => {
   return `https://image.tmdb.org/t/p/w500/${src}?w=${width}&q=${quality || 75}`
 }
