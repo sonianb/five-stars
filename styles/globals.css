@@ -14,3 +14,10 @@ a {
 * {
   box-sizing: border-box;
 }
+
+
+.photo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}

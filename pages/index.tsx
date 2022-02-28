@@ -6,7 +6,7 @@ import { getPerformance } from "firebase/performance";
 import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
 import Ratings from '../components/ratings/Ratings';
-import firebaseApp, { signIn, signOutUser, useAuth } from '../lib/firebase';
+import firebaseApp, { useAuth } from '../lib/firebase';
 
 if (process.browser) {
   getPerformance(firebaseApp);
@@ -22,10 +22,13 @@ export default function Home({ posts }) {
   const handlePassword = (event) => password = event.target.value;
 
   const handleSignIn = async () => {
-    signIn(email, password);
+    auth.signInWithPassword(email, password);
+  }
+  const handleSignInGoogle = async () => {
+    auth.signInWithGoogle();
   }
   const handleSignOut = async () => {
-    signOutUser();
+    auth.signOutUser();
   }
 
   return (
@@ -60,6 +63,7 @@ export default function Home({ posts }) {
 
       {auth?.user?.email ?
         <section>
+          <img src={auth.user.photoURL} alt="" className="photo" />
           {auth.user.email}
           <button onClick={handleSignOut}>Sign out</button>
         </section>
@@ -68,6 +72,8 @@ export default function Home({ posts }) {
           <input type="email" onChange={handleEmail} placeholder="email" />
           <input type="password" onChange={handlePassword} placeholder="password" />
           <button onClick={handleSignIn}>Sign in</button>
+          Or
+          <button onClick={handleSignInGoogle}>Sign in with google</button>
         </section>
       }
 
