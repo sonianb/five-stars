@@ -1,10 +1,16 @@
-import {doc, updateDoc} from 'firebase/firestore';
+import { doc, getFirestore, updateDoc } from 'firebase/firestore';
+import firebaseApp from '../../lib/firebase';
 import styles from './Ratings.module.css';
+
+const db = getFirestore(firebaseApp);
+
 
 export default function Ratings({movie}) {
     
     const rateMovie = async (id: string, rating: number) => {
-        console.log('not implemented yet');
+      await updateDoc(doc(db, 'users', 't6aEmLDMWEzR839g5XsP'), {
+        ['ratings.' + id]: rating
+      });
     };
 
     return <div className={styles.stars}>

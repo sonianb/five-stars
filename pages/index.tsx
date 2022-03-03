@@ -1,40 +1,35 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react';
 import styles from '../styles/Home.module.css'
-import {initializeApp} from 'firebase/app';
-import {doc, getFirestore, updateDoc} from 'firebase/firestore';
-import {getPerformance} from "firebase/performance";
+import { getPerformance } from "firebase/performance";
 import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
 import Ratings from '../components/ratings/Ratings';
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBlazGlIWRSB5SuBk_rP8mCofOPE_Dwms8",
-  authDomain: "five-stars-areeltrip.firebaseapp.com",
-  databaseURL: "https://five-stars-areeltrip-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "five-stars-areeltrip",
-  storageBucket: "five-stars-areeltrip.appspot.com",
-  messagingSenderId: "189009950416",
-  appId: "1:189009950416:web:304a18ade6c99c466910d5",
-  measurementId: "G-TH67C7W223"
-};
-
-const firebaseApp = initializeApp(firebaseConfig);
-const db = getFirestore(firebaseApp);
+import firebaseApp, { useAuth } from '../lib/firebase';
 
 if (process.browser) {
   getPerformance(firebaseApp);
 }
 
-export default function Home({posts}) {
+export default function Home({ posts }) {
+  let email: string = '';
+  let password: string = '';
 
-  const rateMovie = async (id: string, rating: number) => {
-    await updateDoc(doc(db, 'users', 't6aEmLDMWEzR839g5XsP'), {
-      ['ratings.' + id]: rating
-    });
-  };
+  const auth = useAuth();
+
+  const handleEmail = (event) => email = event.target.value;
+  const handlePassword = (event) => password = event.target.value;
+
+  const handleSignIn = async () => {
+    auth.signInWithPassword(email, password);
+  }
+  const handleSignInGoogle = async () => {
+    auth.signInWithGoogle();
+  }
+  const handleSignOut = async () => {
+    auth.signOutUser();
+  }
 
   return (
     <div className={styles.container}>
@@ -54,7 +49,7 @@ export default function Home({posts}) {
         <div className={styles.grid}>
           {posts.results.map(movie => (
             <div key={movie.id} className={styles.card}>
-              <Link href={'/movie/' + movie.id}>
+              <Link href={'/movie/' + movie.id} passHref>
                 <h2>{movie.title}</h2>
               </Link>
               <Image loader={tmdbLoader} src={movie.poster_path} alt={movie.title} width={100} height={148} />
@@ -66,19 +61,35 @@ export default function Home({posts}) {
         </div>
       </main>
 
+      {auth?.user?.email ?
+        <section>
+          <img src={auth.user.photoURL} alt="" className="photo" />
+          {auth.user.email}
+          <button onClick={handleSignOut}>Sign out</button>
+        </section>
+        :
+        <section>
+          <input type="email" onChange={handleEmail} placeholder="email" />
+          <input type="password" onChange={handlePassword} placeholder="password" />
+          <button onClick={handleSignIn}>Sign in</button>
+          Or
+          <button onClick={handleSignInGoogle}>Sign in with google</button>
+        </section>
+      }
+
       <Footer />
     </div>
   )
 }
 
-export async function getStaticProps({preview = null}) {
+export async function getStaticProps({ preview = null }) {
   const res = await fetch('https://api.themoviedb.org/3/discover/movie?api_key=' + process.env.NEXT_PUBLIC_MOVIEDB_API_KEY);
   const posts = await res.json();
   return {
-    props: {posts, preview},
+    props: { posts, preview },
   }
 }
 
-const tmdbLoader = ({src, width, quality}) => {
+const tmdbLoader = ({ src, width, quality }) => {
   return `https://image.tmdb.org/t/p/w500/${src}?w=${width}&q=${quality || 75}`
 }
