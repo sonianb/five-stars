@@ -6,7 +6,8 @@ import { getPerformance } from "firebase/performance";
 import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
 import Ratings from '../components/ratings/Ratings';
-import firebaseApp, { useAuth } from '../lib/firebase';
+import firebaseApp from '../lib/firebase';
+import { useAuth } from '../lib/firebase.auth';
 
 if (process.browser) {
   getPerformance(firebaseApp);
