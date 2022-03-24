@@ -1,4 +1,5 @@
 import { getAuth, GoogleAuthProvider, onIdTokenChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
+import { doc, getDoc, getFirestore } from 'firebase/firestore';
 import Router from 'next/router';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { createUser } from './firebase.db';
@@ -23,12 +24,11 @@ export const useAuth = () => {
 };
 
 const auth = getAuth();
+const db = getFirestore();
 
 function useProvideAuth() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  console.log(user);
 
 
   const handleUser = async (rawUser) => {
@@ -89,12 +89,15 @@ function useProvideAuth() {
 
 const formatUser = async (user) => {
   const token = await user.getIdToken();
+  const userData = await getDoc(doc(db, 'users', user.uid));
+
   return {
     uid: user.uid,
     email: user.email,
     name: user.displayName,
     provider: user.providerData[0].providerId,
     photoUrl: user.photoURL,
+    ratings: userData.data().ratings,
     token
   };
 };

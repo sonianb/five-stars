@@ -1,13 +1,13 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
-import styles from '../styles/Home.module.css'
 import { getPerformance } from "firebase/performance";
-import Header from '../components/header/Header';
+import Head from 'next/head';
+import Image from 'next/image';
+import Link from 'next/link';
 import Footer from '../components/footer/Footer';
+import Header from '../components/header/Header';
 import Ratings from '../components/ratings/Ratings';
 import firebaseApp from '../lib/firebase';
 import { useAuth } from '../lib/firebase.auth';
+import styles from '../styles/Home.module.css';
 
 if (process.browser) {
   getPerformance(firebaseApp);
@@ -23,13 +23,13 @@ export default function Home({ posts }) {
   const handlePassword = (event) => password = event.target.value;
 
   const handleSignIn = async () => {
-    auth.signInWithPassword(email, password);
+    auth.signinWithEmail(email, password);
   }
   const handleSignInGoogle = async () => {
-    auth.signInWithGoogle();
+    auth.signinWithGoogle();
   }
   const handleSignOut = async () => {
-    auth.signOutUser();
+    auth.signout();
   }
 
   return (
