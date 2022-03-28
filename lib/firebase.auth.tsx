@@ -2,14 +2,15 @@ import { getAuth, GoogleAuthProvider, onIdTokenChanged, signInWithEmailAndPasswo
 import { doc, getDoc, getFirestore } from 'firebase/firestore';
 import Router from 'next/router';
 import { createContext, useContext, useEffect, useState } from 'react';
-import { createUser } from './firebase.db';
+import { createUser, dbRateMovie } from './firebase.db';
 
 interface AuthContext {
-  user: any;
+  user: { uid: string, email: string, ratings: any };
   loading: boolean;
   signinWithEmail: (email: string, password: string) => Promise<any>;
   signinWithGoogle: (redirect?: string) => Promise<any>;
   signout: () => Promise<any>;
+  rateMovie: (id: string, ratings: number) => void;
 }
 
 const authContext = createContext<AuthContext>(undefined);
@@ -29,7 +30,6 @@ const db = getFirestore();
 function useProvideAuth() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
 
   const handleUser = async (rawUser) => {
     if (rawUser) {
@@ -72,6 +72,12 @@ function useProvideAuth() {
     return signOut(auth).then(() => handleUser(false));
   };
 
+  const rateMovie = (id, rating) => {
+    setUser(user => ({ ...user, ratings: { ...user.ratings, [id]: rating } }));
+    dbRateMovie(user.uid, id, rating);
+  }
+
+
   useEffect(() => {
     const unsubscribe = onIdTokenChanged(auth, handleUser);
 
@@ -81,6 +87,7 @@ function useProvideAuth() {
   return {
     user,
     loading,
+    rateMovie,
     signinWithEmail,
     signinWithGoogle,
     signout
