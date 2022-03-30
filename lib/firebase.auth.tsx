@@ -5,7 +5,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { createUser, dbRateMovie } from './firebase.db';
 
 interface AuthContext {
-  user: { uid: string, email: string, ratings: any };
+  user: { uid: string, email: string, ratings: any, photoUrl: string };
   loading: boolean;
   signinWithEmail: (email: string, password: string) => Promise<any>;
   signinWithGoogle: (redirect?: string) => Promise<any>;

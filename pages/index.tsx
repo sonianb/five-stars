@@ -64,7 +64,7 @@ export default function Home({ posts }) {
 
       {auth?.user?.email ?
         <section>
-          <img src={auth.user.photoURL} alt="" className="photo" />
+          <img src={auth.user.photoUrl} alt="" className="photo" />
           {auth.user.email}
           <button onClick={handleSignOut}>Sign out</button>
         </section>
@@ -84,8 +84,9 @@ export default function Home({ posts }) {
 }
 
 export async function getStaticProps({ preview = null }) {
-  const res = await fetch('https://api.themoviedb.org/3/discover/movie?api_key=' + process.env.NEXT_PUBLIC_MOVIEDB_API_KEY);
-  const posts = await res.json();
+  // const res = await fetch('https://api.themoviedb.org/3/discover/movie?api_key=' + process.env.NEXT_PUBLIC_MOVIEDB_API_KEY);
+  // const posts = await res.json();
+  const posts = { results: [] };
   return {
     props: { posts, preview },
   }
