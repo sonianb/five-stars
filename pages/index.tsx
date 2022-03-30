@@ -1,12 +1,13 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
-import styles from '../styles/Home.module.css'
 import { getPerformance } from "firebase/performance";
-import Header from '../components/header/Header';
+import Head from 'next/head';
+import Image from 'next/image';
+import Link from 'next/link';
 import Footer from '../components/footer/Footer';
+import Header from '../components/header/Header';
 import Ratings from '../components/ratings/Ratings';
-import firebaseApp, { useAuth } from '../lib/firebase';
+import firebaseApp from '../lib/firebase';
+import { useAuth } from '../lib/firebase.auth';
+import styles from '../styles/Home.module.css';
 
 if (process.browser) {
   getPerformance(firebaseApp);
@@ -22,13 +23,13 @@ export default function Home({ posts }) {
   const handlePassword = (event) => password = event.target.value;
 
   const handleSignIn = async () => {
-    auth.signInWithPassword(email, password);
+    auth.signinWithEmail(email, password);
   }
   const handleSignInGoogle = async () => {
-    auth.signInWithGoogle();
+    auth.signinWithGoogle();
   }
   const handleSignOut = async () => {
-    auth.signOutUser();
+    auth.signout();
   }
 
   return (
@@ -63,7 +64,7 @@ export default function Home({ posts }) {
 
       {auth?.user?.email ?
         <section>
-          <img src={auth.user.photoURL} alt="" className="photo" />
+          <img src={auth.user.photoUrl} alt="" className="photo" />
           {auth.user.email}
           <button onClick={handleSignOut}>Sign out</button>
         </section>
@@ -83,8 +84,9 @@ export default function Home({ posts }) {
 }
 
 export async function getStaticProps({ preview = null }) {
-  const res = await fetch('https://api.themoviedb.org/3/discover/movie?api_key=' + process.env.NEXT_PUBLIC_MOVIEDB_API_KEY);
-  const posts = await res.json();
+  // const res = await fetch('https://api.themoviedb.org/3/discover/movie?api_key=' + process.env.NEXT_PUBLIC_MOVIEDB_API_KEY);
+  // const posts = await res.json();
+  const posts = { results: [] };
   return {
     props: { posts, preview },
   }

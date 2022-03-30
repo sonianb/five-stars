@@ -1,24 +1,22 @@
+import Image from 'next/image';
 import Link from "next/link";
-import Image from 'next/image'
+import { useRouter } from "next/router";
 import useSWR from "swr";
-import {useRouter} from "next/router";
-import styles from "./Movie.module.css";
-import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
+import Header from "../../components/header/Header";
 import Ratings from "../../components/ratings/Ratings";
+import styles from "./Movie.module.css";
 
 
 const fetcher = (url) => fetch(url).then(res => res.json());
 
 function MoviePage() {
     const router = useRouter()
-    const {id} = router.query
-    const {data, error} = useSWR(`https://api.themoviedb.org/3/movie/${id}?api_key=` + process.env.NEXT_PUBLIC_MOVIEDB_API_KEY, fetcher);
+    const { id } = router.query
+    const { data, error } = useSWR(`https://api.themoviedb.org/3/movie/${id}?api_key=` + process.env.NEXT_PUBLIC_MOVIEDB_API_KEY, fetcher);
 
     if (!data) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
-
-    console.log(data);
 
     return <div>
         <Header />
@@ -56,7 +54,7 @@ function MoviePage() {
     </div>
 }
 
-const tmdbLoader = ({src, width, quality}) => {
+const tmdbLoader = ({ src, width, quality }) => {
     return `https://image.tmdb.org/t/p/w500/${src}?w=${width}&q=${quality || 75}`
 }
 

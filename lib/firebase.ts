@@ -1,6 +1,4 @@
 import { initializeApp } from 'firebase/app';
-import { FacebookAuthProvider, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
-import { useEffect, useState } from 'react';
 
 
 const firebaseConfig = {
@@ -15,45 +13,5 @@ const firebaseConfig = {
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
-
-const auth = getAuth();
-
-export const useAuth = () => {
-  const [user, setUser] = useState<undefined | { email: string, photoURL: string }>(undefined);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setLoading(true)
-    onAuthStateChanged(auth, function handleAuth(user) {
-      if (user) {
-        setUser(user);
-        setLoading(false);
-      } else {
-        setUser(null);
-        setLoading(false)
-      }
-    });
-  }, [user]);
-
-  const signInWithGoogle = () => signInWithPopup(auth, new GoogleAuthProvider());
-
-  const signInWithPassword = async (email, password) => await signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in 
-      const user = userCredential.user;
-      console.log(user);
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.error(errorCode, errorMessage);
-    });
-
-  const signOutUser = () => signOut(auth);
-
-  return { user, loading, signInWithGoogle, signInWithPassword, signOutUser };
-}
-
 
 export default firebaseApp;

@@ -1,23 +1,21 @@
-import { doc, getFirestore, updateDoc } from 'firebase/firestore';
+import { getFirestore } from 'firebase/firestore';
 import firebaseApp from '../../lib/firebase';
+import { useAuth } from '../../lib/firebase.auth';
 import styles from './Ratings.module.css';
 
 const db = getFirestore(firebaseApp);
 
 
-export default function Ratings({movie}) {
-    
-    const rateMovie = async (id: string, rating: number) => {
-      await updateDoc(doc(db, 'users', 't6aEmLDMWEzR839g5XsP'), {
-        ['ratings.' + id]: rating
-      });
-    };
+export default function Ratings({ movie }) {
 
-    return <div className={styles.stars}>
-    <span onClick={() => rateMovie(movie.id, 1)}>☆</span>
-    <span onClick={() => rateMovie(movie.id, 2)}>☆</span>
-    <span onClick={() => rateMovie(movie.id, 3)}>☆</span>
+  const { user, rateMovie } = useAuth();
+
+  return <div className={styles.stars}>
+    {user?.ratings && user.ratings[movie.id] && <span>{user.ratings[movie.id]}</span>}
+    <span className='dd' onClick={() => rateMovie(movie.id, 5)}>☆</span>
     <span onClick={() => rateMovie(movie.id, 4)}>☆</span>
-    <span onClick={() => rateMovie(movie.id, 5)}>☆</span>
+    <span onClick={() => rateMovie(movie.id, 3)}>☆</span>
+    <span onClick={() => rateMovie(movie.id, 2)}>☆</span>
+    <span onClick={() => rateMovie(movie.id, 1)}>☆</span>
   </div>
 }
