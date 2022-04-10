@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image, { ImageLoader } from 'next/image';
 import Link from "next/link";
 import { useRouter } from "next/router";
 import useSWR from "swr";
@@ -54,7 +54,7 @@ function MoviePage() {
     </div>
 }
 
-const tmdbLoader = ({ src, width, quality }) => {
+const tmdbLoader: ImageLoader = ({ src, width, quality }) => {
     return `https://image.tmdb.org/t/p/w500/${src}?w=${width}&q=${quality || 75}`
 }
 

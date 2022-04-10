@@ -1,6 +1,6 @@
 import { getPerformance } from "firebase/performance";
 import Head from 'next/head';
-import Image from 'next/image';
+import Image, { ImageLoader } from 'next/image';
 import Link from 'next/link';
 import Footer from '../components/footer/Footer';
 import Header from '../components/header/Header';
@@ -92,6 +92,6 @@ export async function getStaticProps({ preview = null }) {
   }
 }
 
-const tmdbLoader = ({ src, width, quality }) => {
+const tmdbLoader: ImageLoader = ({ src, width, quality }) => {
   return `https://image.tmdb.org/t/p/w500/${src}?w=${width}&q=${quality || 75}`
 }
