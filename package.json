@@ -11,9 +11,9 @@
   },
   "dependencies": {
     "firebase": "^9.4.0",
-    "next": "^11",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
+    "next": "12",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
     "swr": "^1.1.2"
   },
   "devDependencies": {
@@ -23,9 +23,5 @@
     "eslint": "^7.0.0",
     "eslint-config-next": "^11",
     "typescript": "^4.4.4"
-  },
-  "resolutions": {
-    "react": "17.0.2",
-    "react-dom": "17.0.2"
   }
 }
