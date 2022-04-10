@@ -2,8 +2,6 @@ import Image, { ImageLoader } from 'next/image';
 import Link from "next/link";
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import Footer from "../../components/footer/Footer";
-import Header from "../../components/header/Header";
 import Ratings from "../../components/ratings/Ratings";
 import styles from "./Movie.module.css";
 
@@ -19,7 +17,6 @@ function MoviePage() {
     if (error) return <p>Error :(</p>;
 
     return <div>
-        <Header />
         <section className={styles.movieContainer}>
             <h1 id={styles.h1Grid}>{data.title}</h1>
             <div className={styles.moviePoster} id={styles.imgGrid}>
@@ -50,7 +47,6 @@ function MoviePage() {
                 </Link>
             </div>
         </section>
-        <Footer />
     </div>
 }
 
