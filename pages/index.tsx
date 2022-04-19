@@ -1,3 +1,4 @@
+import { Grid } from '@mantine/core';
 import { getPerformance } from "firebase/performance";
 import Head from 'next/head';
 import Image, { ImageLoader } from 'next/image';
@@ -22,22 +23,24 @@ export default function Home({ posts }) {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Five Stars
+          Discover
         </h1>
 
-        <div className={styles.grid}>
+        <Grid gutter="lg">
           {posts.results.map(movie => (
-            <div key={movie.id} className={styles.card}>
-              <Link href={'/movie/' + movie.id} passHref>
-                <h2>{movie.title}</h2>
-              </Link>
-              <Image loader={tmdbLoader} src={movie.poster_path} alt={movie.title} width={100} height={148} />
-              <div>
-                <Ratings movie={movie} />
+            <Grid.Col sm={6} lg={4} key={movie.id}>
+              <div className={styles.card}>
+                <Link href={'/movie/' + movie.id} passHref>
+                  <h2>{movie.title}</h2>
+                </Link>
+                <Image loader={tmdbLoader} src={movie.poster_path} alt={movie.title} width={100} height={148} />
+                <div>
+                  <Ratings movie={movie} />
+                </div>
               </div>
-            </div>
+            </Grid.Col>
           ))}
-        </div>
+        </Grid>
       </main>
     </div>
   )
