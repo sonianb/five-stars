@@ -1,12 +1,10 @@
+import { Grid } from '@mantine/core';
 import { getPerformance } from "firebase/performance";
 import Head from 'next/head';
 import Image, { ImageLoader } from 'next/image';
 import Link from 'next/link';
-import Footer from '../components/footer/Footer';
-import Header from '../components/header/Header';
 import Ratings from '../components/ratings/Ratings';
 import firebaseApp from '../lib/firebase';
-import { useAuth } from '../lib/firebase.auth';
 import styles from '../styles/Home.module.css';
 
 if (process.browser) {
@@ -14,23 +12,6 @@ if (process.browser) {
 }
 
 export default function Home({ posts }) {
-  let email: string = '';
-  let password: string = '';
-
-  const auth = useAuth();
-
-  const handleEmail = (event) => email = event.target.value;
-  const handlePassword = (event) => password = event.target.value;
-
-  const handleSignIn = async () => {
-    auth.signinWithEmail(email, password);
-  }
-  const handleSignInGoogle = async () => {
-    auth.signinWithGoogle();
-  }
-  const handleSignOut = async () => {
-    auth.signout();
-  }
 
   return (
     <div className={styles.container}>
@@ -40,53 +21,34 @@ export default function Home({ posts }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header />
-
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Five Stars
+          Discover
         </h1>
 
-        <div className={styles.grid}>
+        <Grid gutter="lg">
           {posts.results.map(movie => (
-            <div key={movie.id} className={styles.card}>
-              <Link href={'/movie/' + movie.id} passHref>
-                <h2>{movie.title}</h2>
-              </Link>
-              <Image loader={tmdbLoader} src={movie.poster_path} alt={movie.title} width={100} height={148} />
-              <div>
-                <Ratings movie={movie} />
+            <Grid.Col sm={6} lg={4} key={movie.id}>
+              <div className={styles.card}>
+                <Link href={'/movie/' + movie.id} passHref>
+                  <h2>{movie.title}</h2>
+                </Link>
+                <Image loader={tmdbLoader} src={movie.poster_path} alt={movie.title} width={100} height={148} />
+                <div>
+                  <Ratings movie={movie} />
+                </div>
               </div>
-            </div>
+            </Grid.Col>
           ))}
-        </div>
+        </Grid>
       </main>
-
-      {auth?.user?.email ?
-        <section>
-          <img src={auth.user.photoUrl} alt="" className="photo" />
-          {auth.user.email}
-          <button onClick={handleSignOut}>Sign out</button>
-        </section>
-        :
-        <section>
-          <input type="email" onChange={handleEmail} placeholder="email" />
-          <input type="password" onChange={handlePassword} placeholder="password" />
-          <button onClick={handleSignIn}>Sign in</button>
-          Or
-          <button onClick={handleSignInGoogle}>Sign in with google</button>
-        </section>
-      }
-
-      <Footer />
     </div>
   )
 }
 
 export async function getStaticProps({ preview = null }) {
-  // const res = await fetch('https://api.themoviedb.org/3/discover/movie?api_key=' + process.env.NEXT_PUBLIC_MOVIEDB_API_KEY);
-  // const posts = await res.json();
-  const posts = { results: [] };
+  const res = await fetch('https://api.themoviedb.org/3/discover/movie?api_key=' + process.env.NEXT_PUBLIC_MOVIEDB_API_KEY);
+  const posts = await res.json();
   return {
     props: { posts, preview },
   }
